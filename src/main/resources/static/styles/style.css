@@ -1,0 +1,21 @@
+.grid {
+    display: table;
+    width: auto;
+    background-color: #eee;
+    border: 1px solid #666666;
+    border-spacing: 5px;
+}
+.grid-row {
+    display: table-row-group;
+    width: auto;
+    clear: both;
+}
+.grid-col {
+    float: left;
+    display: table-column;
+    width: 200px;
+    background-color: #ccc;
+}
+.validationError {
+    color: red;
+}

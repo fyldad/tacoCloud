@@ -1,0 +1,9 @@
+{
+  "properties": [
+    {
+      "name": "taco.orders.pageSize",
+      "type": "java.lang.Integer",
+      "description": "max size for orders page."
+    }
+  ]
+}

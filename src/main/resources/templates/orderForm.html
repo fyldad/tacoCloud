@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Taco Cloud</title>
+    <link rel="stylesheet" th:href="@{/styles/style.css}"/>
+</head>
+<body>
+
+<form method="post" th:action="@{/orders}" th:object="${tacoOrder}">
+    <h1>Order your taco creations!</h1>
+    <img th:src="@{/images/TacoCloud.png}" width="600" height="500"/>
+    <h3>Your tacos in this order:</h3>
+    <a th:href="@{/design}" id="another">Design another taco</a><br/>
+    <ul>
+        <li th:each="taco : ${tacoOrder.tacos}">
+            <span th:text="${taco.name}">taco name</span></li>
+    </ul>
+
+    <div class="grid">
+        <div class="grid-row">
+            <h3>Deliver my taco masterpieces to...</h3>
+            <div class="grid-col">
+                <label for="deliveryName">Name: </label>
+                <input type="text" th:field="*{deliveryName}"/>
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('deliveryName')}"
+                      th:errors="*{deliveryName}">CC Num Error</span>
+                <br/>
+            </div>
+
+            <div class="grid-col">
+                <label for="deliveryStreet">Street address: </label>
+                <input type="text" th:field="*{deliveryStreet}"/>
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('deliveryStreet')}"
+                      th:errors="*{deliveryStreet}">CC Num Error</span>
+                <br/>
+            </div>
+
+            <div class="grid-col">
+                <label for="deliveryCity">City: </label>
+                <input type="text" th:field="*{deliveryCity}"/>
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('deliveryCity')}"
+                      th:errors="*{deliveryCity}">CC Num Error</span>
+                <br/>
+            </div>
+
+            <div class="grid-col">
+                <label for="deliveryState">State: </label>
+                <input type="text" th:field="*{deliveryState}"/>
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('deliveryState')}"
+                      th:errors="*{deliveryState}">CC Num Error</span>
+                <br/>
+            </div>
+
+            <div class="grid-col">
+                <label for="deliveryZip">Zip code: </label>
+                <input type="text" th:field="*{deliveryZip}"/>
+                <span class="validationError"
+                      th:if="${#fields.hasErrors('deliveryZip')}"
+                      th:errors="*{deliveryZip}">CC Num Error</span>
+                <br/>
+            </div>
+        </div>
+
+        <div class="grid-row">
+            <h3>Here’s how I’ll pay...</h3>
+            <div class="grid-col">
+                <label for="ccNumber">Credit Card #: </label>
+                <input type="text" th:field="*{ccNumber}"/>
+                <br/>
+            </div>
+            <div class="grid-col">
+                <label for="ccExpiration">Expiration: </label>
+                <input type="text" th:field="*{ccExpiration}"/>
+                <br/>
+            </div>
+            <div class="grid-col">
+                <label for="ccCVV">CVV: </label>
+                <input type="text" th:field="*{ccCVV}"/>
+                <br/>
+            </div>
+        </div>
+    </div>
+
+    <input type="submit" value="Submit Order"/>
+
+</form>
+</body>
+</html>

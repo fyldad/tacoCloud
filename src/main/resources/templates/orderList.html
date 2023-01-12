@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Taco Cloud</title>
+    <link rel="stylesheet" th:href="@{/styles/style.css}"/>
+</head>
+<body>
+
+<div class="grid">
+
+    <div class="grid-row" id="orders">
+        <h3 class="grid-col">My orders:</h3>
+        <div th:each="order : ${orders}">
+            <span th:text="${order.deliveryName}">order</span><br/>
+        </div>
+    </div>
+
+</div>
+
+<form>
+    <input type="button" value="back" onclick="history.back()">
+</form>
+
+</body>
+</html>
