@@ -1,6 +1,7 @@
 package com.example.test.controller.thymeleaf;
 
 import com.example.test.config.OrderConfig;
+import com.example.test.integration.UpperCaseGateway;
 import com.example.test.integration.file.FileWriterGateway;
 import com.example.test.messaging.jms.JmsOrderSender;
 import com.example.test.messaging.kafka.KafkaOrderSender;
@@ -38,6 +39,7 @@ public class OrderController {
     private final RabbitOrderSender rabbitOrderSender;
     private final KafkaOrderSender kafkaOrderSender;
     private final FileWriterGateway fileWriterGateway;
+    private final UpperCaseGateway upperCaseGateway;
 
     @GetMapping("current")
     public String orderForm() {
@@ -57,7 +59,7 @@ public class OrderController {
         kafkaOrderSender.send(order);
         fileWriterGateway.writeToFile("orders.log", order.toString());
 
-        log.info("order submitted: {}", order);
+        log.info("order submitted: {}", upperCaseGateway.upperCase(order.toString()));
         status.setComplete();
 
         return "redirect:/";
