@@ -1,6 +1,6 @@
 package com.example.test.controller.thymeleaf;
 
-import com.example.test.config.OrderConfig;
+import com.example.test.config.taco.OrderConfig;
 import com.example.test.integration.UpperCaseGateway;
 import com.example.test.integration.file.FileWriterGateway;
 import com.example.test.messaging.jms.JmsOrderSender;

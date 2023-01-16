@@ -1,4 +1,4 @@
-package com.example.test.config;
+package com.example.test.config.taco;
 
 import jakarta.validation.constraints.Max;
 import jakarta.validation.constraints.Min;

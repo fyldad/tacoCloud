@@ -18,10 +18,10 @@ spring:
     template:
       default-topic: ${queue.name}
     producer:
-      value-serializer: com.example.test.config.KafkaOrderSerializer
+      value-serializer: com.example.test.config.messaging.KafkaOrderSerializer
     consumer:
       group-id: kitchens.central
-      value-deserializer: com.example.test.config.KafkaOrderDeserializer
+      value-deserializer: com.example.test.config.messaging.KafkaOrderDeserializer
   security:
     oauth2:
       client:

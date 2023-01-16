@@ -1,4 +1,4 @@
-package com.example.test.config;
+package com.example.test.config.messaging;
 
 import com.example.test.model.TacoOrder;
 import org.springframework.amqp.support.converter.Jackson2JsonMessageConverter;
