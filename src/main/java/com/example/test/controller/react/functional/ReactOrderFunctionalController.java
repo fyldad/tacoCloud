@@ -2,7 +2,7 @@ package com.example.test.controller.react.functional;
 
 import com.example.test.model.TacoOrder;
 import com.example.test.repository.reactive.ReactiveOrderRepository;
-import lombok.RequiredArgsConstructor;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.web.reactive.function.server.RouterFunction;
@@ -11,21 +11,28 @@ import org.springframework.web.reactive.function.server.ServerResponse;
 import reactor.core.publisher.Mono;
 
 import java.net.URI;
-import java.util.Objects;
 
-import static org.springframework.web.reactive.function.server.RequestPredicates.*;
+import static org.springframework.web.reactive.function.server.RequestPredicates.GET;
 import static org.springframework.web.reactive.function.server.RouterFunctions.route;
+import static org.springframework.web.reactive.function.server.ServerResponse.ok;
 
 @Configuration
-@RequiredArgsConstructor
 public class ReactOrderFunctionalController {
 
     private final ReactiveOrderRepository repository;
 
+    @Autowired
+    public ReactOrderFunctionalController(ReactiveOrderRepository repository) {
+        this.repository = repository;
+    }
+
     @Bean
-    public RouterFunction<?> routerFunction() {
-        return route(GET("/api/func/orders").and(queryParam("recent", Objects::nonNull)), this::recent)
-                .andRoute(POST("/api/func/orders"), this::postOrder);
+    public RouterFunction<ServerResponse> routerFunction() {
+
+        return route(GET("/api/func/orders"), request -> ok().body(repository.findAll(), TacoOrder.class));
+
+//        return route(GET("/api/func/orders"), this::recent)
+//                .and(route(POST("/api/func/orders"), this::postOrder));
     }
 
     private Mono<ServerResponse> postOrder(ServerRequest serverRequest) {
@@ -38,7 +45,7 @@ public class ReactOrderFunctionalController {
     }
 
     private Mono<ServerResponse> recent(ServerRequest serverRequest) {
-        return ServerResponse.ok().body(repository.findAll().take(5), TacoOrder.class);
+        return ok().body(repository.findAll().take(5), TacoOrder.class);
     }
 
 }

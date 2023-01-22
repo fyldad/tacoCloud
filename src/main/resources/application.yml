@@ -45,10 +45,10 @@ spring:
 
 server:
   port: 8443
-  ssl:
-    key-store: classpath:keystore.jks
-    key-password: password
-    key-store-password: password
+#  ssl:
+#    key-store: classpath:keystore.jks
+#    key-password: password
+#    key-store-password: password
 
 queue:
   name: tacoCloud.order.queue

@@ -1,12 +1,12 @@
 package com.example.test;
 
-import com.example.test.controller.react.functional.ReactOrderFunctionalController;
+import com.example.test.controller.react.ReactOrderController;
 import com.example.test.model.Ingredient;
 import com.example.test.model.Taco;
 import com.example.test.model.TacoOrder;
 import com.example.test.repository.reactive.ReactiveOrderRepository;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.mockito.Mockito;
 import org.springframework.test.web.reactive.server.WebTestClient;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
@@ -14,9 +14,19 @@ import reactor.core.publisher.Mono;
 import java.util.*;
 
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.when;
 
-class ReactOrderFunctionalControllerTest {
+class ReactOrderControllerTest {
+
+    private ReactiveOrderRepository repository;
+    private WebTestClient testClient;
+
+    @BeforeEach
+    void init() {
+        repository = mock(ReactiveOrderRepository.class);
+        testClient = WebTestClient.bindToController(new ReactOrderController(repository)).build();
+    }
 
     @Test
     public void checkReturn() {
@@ -32,14 +42,10 @@ class ReactOrderFunctionalControllerTest {
                 testTacoOrder(Arrays.asList(15L ,16L))
         };
 
-        ReactiveOrderRepository repository = Mockito.mock(ReactiveOrderRepository.class);
         Flux<TacoOrder> orderFlux = Flux.just(orders);
         when(repository.findAll()).thenReturn(orderFlux);
 
-        WebTestClient testClient = WebTestClient.bindToController(
-                new ReactOrderFunctionalController(repository)).build();
-
-        testClient.get().uri("/api/func/orders?recent")
+        testClient.get().uri("/api/reactOrders")
                 .exchange()
                 .expectStatus().isOk()
                 .expectBodyList(TacoOrder.class)
@@ -48,15 +54,12 @@ class ReactOrderFunctionalControllerTest {
 
     @Test
     public void postTaco() {
-        ReactiveOrderRepository repository = Mockito.mock(ReactiveOrderRepository.class);
-        WebTestClient testClient = WebTestClient.bindToController(
-                new ReactOrderFunctionalController(repository)).build();
         Mono<TacoOrder> unsavedOrderMono = Mono.just(testTacoOrder(Collections.singletonList(1L)));
         TacoOrder savedOrder = testTacoOrder(Collections.singletonList(1L));
         Flux<TacoOrder> savedOrderFlux = Flux.just(savedOrder);
         when(repository.saveAll(any(Mono.class))).thenReturn(savedOrderFlux);
 
-        testClient.post().uri("/api/func/orders")
+        testClient.post().uri("/api/reactOrders")
                 .body(unsavedOrderMono, TacoOrder.class)
                 .exchange()
                 .expectStatus().isCreated()

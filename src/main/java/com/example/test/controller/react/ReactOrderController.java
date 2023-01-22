@@ -19,7 +19,7 @@ public class ReactOrderController {
 
     @GetMapping
     public Flux<TacoOrder> recentOrders() {
-        return repository.findAll().take(10);
+        return repository.findAll().take(5);
     }
 
     @GetMapping("/{id}")
