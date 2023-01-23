@@ -1,6 +1,9 @@
 package com.example.test.model;
 
-import lombok.*;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.security.core.GrantedAuthority;
@@ -28,6 +31,10 @@ public class User implements UserDetails {
     private String state;
     private String zip;
     private String phoneNumber;
+
+    public UserDetails toUserDetails() {
+        return this;
+    }
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
