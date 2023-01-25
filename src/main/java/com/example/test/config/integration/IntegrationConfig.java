@@ -54,7 +54,7 @@ public class IntegrationConfig {
     }
 
     @Bean
-    @InboundChannelAdapter(poller = @Poller(fixedRate = "10000"), channel = "printerChannel")
+    @InboundChannelAdapter(poller = @Poller(fixedRate = "100000"), channel = "printerChannel")
     public MessageSource<Integer> numberSource(AtomicInteger source) {
         return new AbstractMessageSource<>() {
             @Override

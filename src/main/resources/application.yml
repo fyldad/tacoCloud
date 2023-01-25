@@ -1,4 +1,7 @@
 spring:
+  rsocket:
+    server:
+      port: 8444
   data:
     rest:
       base-path: /data-api
