@@ -8,6 +8,7 @@ import org.springframework.messaging.handler.annotation.DestinationVariable;
 import org.springframework.messaging.handler.annotation.MessageMapping;
 import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
+import reactor.core.publisher.Mono;
 
 @Slf4j
 @Controller
@@ -19,6 +20,20 @@ public class IngredientRsocketController {
     @MessageMapping("ingredient/{type}")
     public Flux<Ingredient> getIngredientsByType(@DestinationVariable("type") Ingredient.Type type) {
         return repository.findAllByType(type);
+    }
+
+    @MessageMapping("ingredient")
+    public Mono<Void> saveIngredient(Mono<Ingredient> ingredientMono) {
+        return ingredientMono.doOnNext(ingredient -> {
+            log.info("received new ingredient : {}", ingredient);
+        }).thenEmpty(Mono.empty());
+    }
+
+    @MessageMapping("ingredientFlux")
+    public Flux<Ingredient> getIngredientId(Flux<String> ingredientIdFlux) {
+        return ingredientIdFlux
+                .doOnNext(in -> log.info("calculating ingredient for id: {}", in))
+                .flatMap(repository::findById);
     }
 
 }
