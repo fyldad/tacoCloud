@@ -64,3 +64,26 @@ logging:
 taco:
   orders:
     pageSize: 5
+
+management:
+  endpoint:
+    health:
+      show-details: always
+    env:
+      show-values: always
+  endpoints:
+    web:
+      exposure:
+        include: "*"
+  info:
+    env:
+      enabled: true
+  httpexchanges:
+    recording:
+      enabled: true
+
+info:
+  contact:
+    email: support@tacocloud.com
+    phone: 822-625-6831
+

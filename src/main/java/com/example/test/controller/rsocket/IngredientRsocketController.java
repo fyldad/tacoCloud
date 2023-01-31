@@ -10,6 +10,8 @@ import org.springframework.stereotype.Controller;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
+import java.time.Duration;
+
 @Slf4j
 @Controller
 @RequiredArgsConstructor
@@ -19,7 +21,7 @@ public class IngredientRsocketController {
 
     @MessageMapping("ingredient/{type}")
     public Flux<Ingredient> getIngredientsByType(@DestinationVariable("type") Ingredient.Type type) {
-        return repository.findAllByType(type);
+        return repository.findAllByType(type).delayElements(Duration.ofSeconds(1));
     }
 
     @MessageMapping("ingredient")

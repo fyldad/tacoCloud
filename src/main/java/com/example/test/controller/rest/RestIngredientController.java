@@ -4,7 +4,6 @@ import com.example.test.model.Ingredient;
 import com.example.test.repository.IngredientRepository;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.MediaType;
-import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
