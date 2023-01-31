@@ -6,9 +6,11 @@ import com.example.test.integration.file.FileWriterGateway;
 import com.example.test.messaging.jms.JmsOrderSender;
 import com.example.test.messaging.kafka.KafkaOrderSender;
 import com.example.test.messaging.rabbit.RabbitOrderSender;
+import com.example.test.model.Ingredient;
 import com.example.test.model.TacoOrder;
 import com.example.test.model.User;
 import com.example.test.repository.OrderRepository;
+import io.micrometer.core.instrument.MeterRegistry;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -40,6 +42,8 @@ public class OrderController {
     private final KafkaOrderSender kafkaOrderSender;
     private final FileWriterGateway fileWriterGateway;
     private final UpperCaseGateway upperCaseGateway;
+    private final MeterRegistry meterRegistry;
+
 
     @GetMapping("current")
     public String orderForm() {
@@ -57,12 +61,24 @@ public class OrderController {
         jmsOrderSender.send(order);
         rabbitOrderSender.send(order);
         kafkaOrderSender.send(order);
+        addMetricIngredientCounter(order);
         fileWriterGateway.writeToFile("orders.log", order.toString());
 
         log.info("order submitted: {}", upperCaseGateway.upperCase(order.toString()));
         status.setComplete();
 
         return "redirect:/";
+    }
+
+    private void addMetricIngredientCounter(TacoOrder order) {
+        order.getTacos().stream()
+                .flatMap(taco -> taco.getIngredients().stream())
+                .map(Ingredient::getId)
+                .forEach(this::writeRegistry);
+    }
+
+    private void writeRegistry(String ingredientId) {
+        meterRegistry.counter("tacoCloud", "ingredient", ingredientId).increment();
     }
 
     @GetMapping

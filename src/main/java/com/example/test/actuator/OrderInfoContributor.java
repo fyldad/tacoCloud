@@ -1,4 +1,4 @@
-package com.example.test.config.actuator;
+package com.example.test.actuator;
 
 import com.example.test.repository.OrderRepository;
 import lombok.RequiredArgsConstructor;
