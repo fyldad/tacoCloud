@@ -28,7 +28,7 @@ public class ReactOrderFunctionalController {
 
     @Bean
     public RouterFunction<ServerResponse> routerFunction() {
-
+// TODO: 01.02.2023 does not work 404 not found
         return route(GET("/api/func/orders"), request -> ok().body(repository.findAll(), TacoOrder.class));
 
 //        return route(GET("/api/func/orders"), this::recent)

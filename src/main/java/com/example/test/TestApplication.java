@@ -1,6 +1,6 @@
 package com.example.test;
 
-import com.example.test.config.actuator.TacoMetrics;
+import com.example.test.actuator.TacoMetrics;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
 

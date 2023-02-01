@@ -28,15 +28,22 @@ public class SecurityConfig {
 
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-
+// Bearer token
+// TODO: 01.02.2023 does not work
+//        page http://127.0.0.1:9090/login/oauth2/code/taco-admin-client? not found
 //        return http
 //                .authorizeHttpRequests(auth -> auth.anyRequest().authenticated())
 //                .oauth2Login(auth -> auth.loginPage("/oauth2/authorization/taco-admin-client"))
 //                .oauth2Client(Customizer.withDefaults())
 //                .build();
 
+// Basic auth
         return http.authorizeHttpRequests()
-                .requestMatchers("/design", "/orders").hasRole("USER")
+                .requestMatchers(
+                        "/design",
+                        "/orders",
+                        "/actuator/**"
+                ).hasRole("USER")
                 .requestMatchers(HttpMethod.POST, "/api/ingredients").hasAuthority("SCOPE_writeIngredients")
                 .requestMatchers(HttpMethod.DELETE, "/api/ingredients").hasAuthority("SCOPE_deleteIngredients")
                 .requestMatchers("/", "/**").permitAll()
