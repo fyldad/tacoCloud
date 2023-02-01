@@ -40,7 +40,7 @@ public class ReactOrderFunctionalController {
                 .flatMap(repository::save)
                 .flatMap(savedOrder ->
                         ServerResponse.created(URI.create(
-                                        "https://localhost:8443/api/func/orders" + savedOrder.getId()))
+                                        "http://localhost:8443/api/func/orders" + savedOrder.getId()))
                                 .body(savedOrder, TacoOrder.class));
     }
 

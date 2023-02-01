@@ -41,8 +41,9 @@ public class SecurityConfig {
         return http.authorizeHttpRequests()
                 .requestMatchers(
                         "/design",
-                        "/orders",
-                        "/actuator/**"
+                        "/orders"
+//                        "/actuator/**"
+//                        todo authorize in spring boot admin
                 ).hasRole("USER")
                 .requestMatchers(HttpMethod.POST, "/api/ingredients").hasAuthority("SCOPE_writeIngredients")
                 .requestMatchers(HttpMethod.DELETE, "/api/ingredients").hasAuthority("SCOPE_deleteIngredients")

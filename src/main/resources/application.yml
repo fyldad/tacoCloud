@@ -1,4 +1,10 @@
 spring:
+  application:
+    name: taco-cloud
+  boot:
+    admin:
+      client:
+        url: http://localhost:9999
   rsocket:
     server:
       port: 8444
@@ -48,18 +54,18 @@ spring:
 
 server:
   port: 8443
-  ssl:
-    key-store: classpath:keystore.jks
-    key-password: password
-    key-store-password: password
+#  ssl:
+#    key-store: classpath:keystore.jks
+#    key-password: password
+#    key-store-password: password
 
 queue:
   name: tacoCloud.order.queue
 
+# todo does not write to file
 logging:
   file:
     path: C:\Users\WebUser\Documents\tempFiles
-    name: tacoCloud.log
 
 taco:
   orders:
@@ -71,6 +77,8 @@ management:
       show-details: always
     env:
       show-values: always
+    logfile:
+      external-file: C:\Users\WebUser\Documents\tempFiles\orders.log
   endpoints:
     web:
       exposure:

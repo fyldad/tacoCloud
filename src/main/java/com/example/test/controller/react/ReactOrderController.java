@@ -12,7 +12,7 @@ import reactor.core.publisher.Mono;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/reactOrders", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "https://localhost:8443")
+@CrossOrigin(origins = "http://localhost:8443")
 public class ReactOrderController {
 
     private final ReactiveOrderRepository repository;

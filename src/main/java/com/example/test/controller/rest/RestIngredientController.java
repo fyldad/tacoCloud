@@ -11,7 +11,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/ingredients", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "https://localhost:8443")
+@CrossOrigin(origins = "http://localhost:8443")
 public class RestIngredientController {
 
     private final IngredientRepository repository;

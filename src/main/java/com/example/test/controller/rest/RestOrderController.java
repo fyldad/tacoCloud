@@ -17,7 +17,7 @@ import java.util.List;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/orders", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "https://localhost:8443")
+@CrossOrigin(origins = "http://localhost:8443")
 public class RestOrderController {
 
     private final OrderRepository orderRepository;

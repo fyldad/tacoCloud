@@ -18,7 +18,7 @@ import java.util.stream.Collectors;
 @RestController
 @RequiredArgsConstructor
 @RequestMapping(path = "/api/tacos", produces = MediaType.APPLICATION_JSON_VALUE)
-@CrossOrigin(origins = "https://localhost:8443")
+@CrossOrigin(origins = "http://localhost:8443")
 public class RestTacoController {
 
     private final OrderRepository orderRepository;
