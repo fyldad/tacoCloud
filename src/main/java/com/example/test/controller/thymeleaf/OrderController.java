@@ -4,6 +4,7 @@ import com.example.test.config.taco.OrderConfig;
 import com.example.test.integration.UpperCaseGateway;
 import com.example.test.integration.file.FileWriterGateway;
 import com.example.test.messaging.jms.JmsOrderSender;
+import com.example.test.messaging.jmx.JmxOrderSender;
 import com.example.test.messaging.kafka.KafkaOrderSender;
 import com.example.test.messaging.rabbit.RabbitOrderSender;
 import com.example.test.model.Ingredient;
@@ -43,6 +44,7 @@ public class OrderController {
     private final FileWriterGateway fileWriterGateway;
     private final UpperCaseGateway upperCaseGateway;
     private final MeterRegistry meterRegistry;
+    private final JmxOrderSender jmxOrderSender;
 
 
     @GetMapping("current")
@@ -63,6 +65,7 @@ public class OrderController {
         kafkaOrderSender.send(order);
         addMetricIngredientCounter(order);
         fileWriterGateway.writeToFile("orders.log", order.toString());
+        jmxOrderSender.postOrder(order);
 
         log.info("order submitted: {}", upperCaseGateway.upperCase(order.toString()));
         status.setComplete();

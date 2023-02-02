@@ -1,4 +1,6 @@
 spring:
+  jmx:
+    enabled: true
   application:
     name: taco-cloud
   boot:
@@ -80,6 +82,9 @@ management:
     logfile:
       external-file: C:\Users\WebUser\Documents\tempFiles\orders.log
   endpoints:
+    jmx:
+      exposure:
+        include: "*"
     web:
       exposure:
         include: "*"
