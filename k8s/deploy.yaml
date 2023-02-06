@@ -1,0 +1,34 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: taco-cloud
+  labels:
+    app: taco-cloud
+spec:
+  replicas: 3
+  template:
+    metadata:
+      name: taco-cloud
+      labels:
+        app: taco-cloud
+    spec:
+      containers:
+        - name: taco-cloud
+          image: taco-cloud/test:latest
+          imagePullPolicy: IfNotPresent
+          livenessProbe:
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            httpGet:
+              path: /actuator/health/liveness
+              port: 8443
+          readinessProbe:
+            initialDelaySeconds: 2
+            periodSeconds: 5
+            httpGet:
+              path:  /actuator/health/readiness
+              port: 8443
+      restartPolicy: Always
+  selector:
+    matchLabels:
+      app: taco-cloud
